@@ -12,7 +12,7 @@ module ActionController
     end
 
     module ClassMethods
-      attr_accessor :parent_keys
+      attr_accessor_with_default :parent_keys, []
 
       def has_parents(*args)
         self.parent_keys = args.map(&:to_sym)
@@ -46,12 +46,12 @@ module ActionController
       end
 
       def parent_by_key(key)
-        #begin
+        begin
           klass = key.to_s.classify.constantize
           
           klass.find_by_id(params["#{key}_id"])
-        #rescue
-        #end
+        rescue
+        end
       end
     end
   end
