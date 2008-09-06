@@ -9,6 +9,7 @@ module ActionController
       base.extend(ClassMethods)
 
       base.send(:include, InstanceMethods)
+      base.send(:helper_method, :parents)
     end
 
     module ClassMethods
