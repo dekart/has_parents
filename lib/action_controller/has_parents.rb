@@ -50,7 +50,7 @@ module ActionController
         begin
           klass = key.to_s.classify.constantize
           
-          klass.find_by_id(params["#{key}_id"])
+          klass.respond_to?(:as_parent) ? klass.as_parent(params["#{key}_id"]).find(:first) : klass.find_by_id(params["#{key}_id"])
         rescue
         end
       end
