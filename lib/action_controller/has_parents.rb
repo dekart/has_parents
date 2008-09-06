@@ -9,7 +9,7 @@ module ActionController
       base.extend(ClassMethods)
 
       base.send(:include, InstanceMethods)
-      base.send(:helper_method, :parents)
+      base.send(:helper_method, :parents, :last_parent, :has_parents?)
     end
 
     module ClassMethods
@@ -53,6 +53,14 @@ module ActionController
           klass.find_by_id(params["#{key}_id"])
         rescue
         end
+      end
+
+      def has_parents?
+        !parents.empty?
+      end
+
+      def last_parent
+        parents.values.last
       end
     end
   end
