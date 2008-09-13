@@ -1,8 +1,3 @@
-unless RUBY_VERSION =~ /^1\.9/
-  gem("collections")
-  require "collections/sequenced_hash"
-end
-
 module ActionController
   module HasParents
     def self.included(base)
@@ -35,7 +30,7 @@ module ActionController
       def parents
         return @_parent_objects unless @_parent_objects.nil?
 
-        @_parent_objects = (begin SequencedHash rescue Hash end).new
+        @_parent_objects = ActiveSupport::OrderedHash.new
 
         parent_keys.each do |key|
           if parent = parent_by_key(key)
