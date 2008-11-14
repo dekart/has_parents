@@ -1,5 +1,5 @@
-module ActionController
-  module HasParents
+module HasParents
+  module ControllerExtensions
     def self.included(base)
       base.extend(ClassMethods)
 
@@ -30,11 +30,11 @@ module ActionController
       def parents
         return @_parent_objects unless @_parent_objects.nil?
 
-        @_parent_objects = ActiveSupport::OrderedHash.new
+        @_parent_objects = HasParents::ParentCollection.new
 
         parent_keys.each do |key|
           if parent = parent_by_key(key)
-            @_parent_objects[key] = parent
+            @_parent_objects[key.to_sym] = parent
           end
         end
 
@@ -55,7 +55,7 @@ module ActionController
       end
 
       def last_parent
-        parents.values.last
+        parents.last
       end
     end
   end

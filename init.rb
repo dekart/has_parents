@@ -1,3 +1,4 @@
-require "action_controller/has_parents"
+require "has_parents/parent_collection"
+require "has_parents/controller_extensions"
 
-ActionController::Base.send(:include, ActionController::HasParents)
+ActionController::Base.send(:include, HasParents::ControllerExtensions)
